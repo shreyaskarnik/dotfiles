@@ -21,7 +21,6 @@ upug()
 	sudo apt-get -y autoremove
 	sudo apt-get -y autoclean
 	sudo apt-get -y clean
-	sudo rm -rf /var/lib/apt/lists/*
 }
 alias upug=upug
 ec2ssh()
