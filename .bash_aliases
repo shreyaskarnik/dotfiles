@@ -39,7 +39,7 @@ sip()
 alias sip=sip
 drmi()
 {
-  docker rm -v `docker ps -aq --filter 'status=exited'`
+  docker system prune -f
 }
 rmc()
 {
