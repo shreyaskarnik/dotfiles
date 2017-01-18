@@ -1,3 +1,2 @@
-#export GOPATH=/media/DATA/evap/go_projects
-#export PATH=$PATH:$GOPATH/bin
-#export PYTHONPATH=$PYTHONPATH:$PWD
+export GOPATH=/media/DATA/rnd/go_projects
+export PATH=$PATH:$GOPATH/bin
