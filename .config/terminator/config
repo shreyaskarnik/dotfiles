@@ -8,6 +8,8 @@
   title_transmit_bg_color = "#4e9a06"
   title_transmit_fg_color = "#f3f3f3"
 [keybindings]
+  broadcast_all = <Shift>b
+  broadcast_off = <Shift>z
 [layouts]
   [[default]]
     [[[child1]]]
