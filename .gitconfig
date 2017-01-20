@@ -1,0 +1,63 @@
+[alias]
+  graft = !legit graft \"$@\"
+  amend = commit --amend
+  ammend = amend
+  st = status -sb
+  co = commit -am
+  br = branch
+  ch = checkout
+  df = diff
+  gp = pull origin master
+  lg = log --graph --pretty=format:'%C(green)%h%Creset %C(yellow)%d%Creset | %C(blue)%an%Creset | %C(red)%ar%Creset | %C(cyan)%s%Creset'
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  le = log --oneline --decorate
+  fl = log -u
+  graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+  dl = "!git ll -1"
+  dlc = diff --cached HEAD^
+  dr  = "!f() { git diff "$1"^.."$1"; }; f"
+  lc  = "!f() { git ll "$1"^.."$1"; }; f"
+  diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+  f = "!git ls-files | grep -i"
+  grep = grep -Ii
+  gr = grep -Ii
+  la = "!git config -l | grep alias | cut -c 7-"
+[diff]
+  tool = meld
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow
+  frag = magenta
+  old = red
+  new = green
+[color "status"]
+  added = blue
+  changed = green
+  untracked = red
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = auto
+[status]
+  relativePaths = false
+  submodulesummary = true
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 700x550+3120+24
+	history-view-vpane-position = 1594
+	main-window-view = HistoryView
+  file-view-vpane-position = 1304
+[branch]
+  autosetupmerge = always
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg

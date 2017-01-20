@@ -112,3 +112,11 @@ if [[ -f "${HOME}/.bash_profile" ]]; then
 	# shellcheck source=/dev/null
 	source "${HOME}/.bash_profile"
 fi
+if test -f $HOME/.gpg-agent-info && kill -0 `cut -d: -f 2 $HOME/.gpg-agent-info` 2>/dev/null; then
+    GPG_AGENT_INFO=`cat $HOME/.gpg-agent-info | cut -c 16-`
+else
+# No, gpg-agent not available; start gpg-agent
+    eval `gpg-agent --daemon --no-grab > /dev/null 2>&1`
+fi
+export GPG_TTY=`tty`
+export GPG_AGENT_INFO
