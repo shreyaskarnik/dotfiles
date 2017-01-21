@@ -1,3 +1,4 @@
+# handy aliases
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -8,7 +9,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# open specific application 
+# open specific application
 alias open='xdg-open'
 
 # copy working directory
