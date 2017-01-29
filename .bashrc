@@ -115,13 +115,7 @@ fi
 
 # Start the gpg-agent if not already running
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-  eval $(gpg-agent --daemon --enable-ssh-support);
+  eval `gpg-agent --daemon --no-grab >/dev/null 2>&1`;
 fi
-# alias ssh="gpg-connect-agent updatestartuptty /bye >/dev/null; ssh"
-# Set SSH to use gpg-agent
-export GPG_TTY
-GPG_TTY=$(tty)
-# unset SSH_AGENT_PID
-# if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-#   export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
-# fi
+export GPG_TTY=`tty`
+export GPG_AGENT_INFO
