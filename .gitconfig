@@ -66,6 +66,5 @@
 	program = gpg2
 [status]
   showUntrackedFiles = all
-
 [transfer]
   fsckobjects = true
