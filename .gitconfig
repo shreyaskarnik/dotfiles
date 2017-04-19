@@ -25,6 +25,9 @@
   grep = grep -Ii
   gr = grep -Ii
   la = "!git config -l | grep alias | cut -c 7-"
+  undo = reset --soft HEAD^
+  stash-all = stash save --include-untracked
+  glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 [diff]
   tool = meld
 [color "branch"]
@@ -61,3 +64,7 @@
 	gpgsign = true
 [gpg]
 	program = gpg2
+[status]
+  showUntrackedFiles = all
+[transfer]
+  fsckobjects = true
