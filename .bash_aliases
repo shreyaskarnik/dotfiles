@@ -37,28 +37,19 @@ alias g="git"
 apty()
 {
 
-  sudo apt-get -y install $@
+  sudo apt get -y install $@
 
 }
 alias apty=apty
 upug()
 {
-  sudo apt-get -qqy update
-	sudo apt-get -y upgrade
+  sudo apt -qqy update
+	sudo apt -y upgrade
 	sudo apt-get -y autoremove
 	sudo apt-get -y autoclean
 	sudo apt-get -y clean
 }
 alias upug=upug
-ec2ssh()
-{
-  if [[ "$1" == *amazonaws.com* ]]
-  then
-    ssh ubuntu@$1;
-  fi
-
-}
-alias ec2ssh=ec2ssh
 sip()
 {
   sudo pip install --upgrade $@
@@ -75,6 +66,7 @@ rmc()
 }
 rmi()
 {
+  echo "REMOVING ALL DOCKER IMAGES!!!!"
   docker rmi -f `docker images -q`
 }
 drti()
@@ -100,7 +92,7 @@ docker-here()
 }
 keyadd()
 {
-  ssh-add ~/.ssh/hp_ops.pem
+  ssh-add
 }
 autop8()
 {
@@ -112,7 +104,14 @@ docker-gui()
   xhost +local:docker
   docker run -it --rm --privileged=true --net=host -v /tmp/.X11-unix:/tmp/.X11-unix -v "$PWD":/code:rw -w /code -e DISPLAY=unix$DISPLAY --device /dev/snd --device /dev/dri $1 bash
 }
-generate-ssh-keys()
+
+# generate-keys <TYPE> dsa | ecdsa | ed25519 | rsa | rsa1 <EMAIL>
+generate-keys()
 {
-  ssh-keygen -t rsa -b 4096 -C "$1"
+  ssh-keygen -t "$1" -C "$2"
+}
+tempnb()
+{
+  docker pull jupyter/minimal-notebook
+  docker run --rm -it -p 8888:8888 jupyter/minimal-notebook
 }

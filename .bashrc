@@ -113,9 +113,17 @@ if [[ -f "${HOME}/.bash_profile" ]]; then
   source "${HOME}/.bash_profile"
 fi
 
+# use a tty for gpg
+# solves error: "gpg: signing failed: Inappropriate ioctl for device"
+GPG_TTY=$(tty)
+export GPG_TTY
 # Start the gpg-agent if not already running
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-  eval `gpg-agent --daemon --no-grab >/dev/null 2>&1`;
+	gpg-connect-agent /bye >/dev/null 2>&1
+	gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
-export GPG_TTY=`tty`
-export GPG_AGENT_INFO
+# Set SSH to use gpg-agent
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+	export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+fi
