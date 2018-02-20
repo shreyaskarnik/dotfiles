@@ -31,87 +31,9 @@ alias untar='tar xvf'
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 alias ips="sudo ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
-
 alias g="git"
-
-apty()
-{
-
-  sudo apt get -y install $@
-
-}
-alias apty=apty
-upug()
-{
-  sudo apt -qqy update
-	sudo apt -y upgrade
-	sudo apt-get -y autoremove
-	sudo apt-get -y autoclean
-	sudo apt-get -y clean
-}
-alias upug=upug
-sip()
-{
-  sudo pip install --upgrade $@
-}
-alias sip=sip
-drmi()
-{
-  docker system prune -f
-}
-rmc()
-{
-  echo "REMOVING ALL DOCKER CONTAINERS!!!!"
-  docker rm -fv `docker ps -aq`
-}
-rmi()
-{
-  echo "REMOVING ALL DOCKER IMAGES!!!!"
-  docker rmi -f `docker images -q`
-}
-drti()
-{
-  docker rmi $(docker images -f dangling=true -q)
-}
 alias dl='docker ps -l -q'
 alias dip="docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1"
 alias db="docker build -t='$1' .;"
-grn()
-{
-  go run "$1"
-}
 alias dkrspring="docker rmi $(docker images -q -a) "
-alias notebook="jupyter notebook"
 alias dps="docker ps"
-cd() {
-  builtin cd "$*" && echo -ne "\033]0; ${PWD##*/}\007"
-}
-docker-here()
-{
-  docker run -it --rm -v /media/DATA:/DATA $1 bash
-}
-keyadd()
-{
-  ssh-add
-}
-autop8()
-{
-  autopep8         --ignore=E501         --in-place         --jobs=0         -r .
-}
-
-docker-gui()
-{
-  xhost +local:docker
-  docker run -it --rm --privileged=true --net=host -v /tmp/.X11-unix:/tmp/.X11-unix -v "$PWD":/code:rw -w /code -e DISPLAY=unix$DISPLAY --device /dev/snd --device /dev/dri $1 bash
-}
-
-# generate-keys <TYPE> dsa | ecdsa | ed25519 | rsa | rsa1 <EMAIL>
-generate-keys()
-{
-  ssh-keygen -t "$1" -C "$2"
-}
-tempnb()
-{
-  docker pull jupyter/minimal-notebook
-  docker run --rm -it -p 8888:8888 jupyter/minimal-notebook
-}

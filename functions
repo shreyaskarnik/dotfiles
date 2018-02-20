@@ -1,0 +1,125 @@
+#!/bin/bash
+
+# some functions from https://github.com/jessfraz/dotfiles/blob/master/.functions
+
+
+# apt-install package
+apty() {
+
+  sudo apt get -y install $@
+
+}
+# Run update and upgrade
+upug() {
+  sudo apt -qqy update
+	sudo apt -y upgrade
+	sudo apt-get -y autoremove
+	sudo apt-get -y autoclean
+	sudo apt-get -y clean
+}
+
+# Docker System Prune
+drmi() {
+  docker system prune -f
+}
+
+# Remove all docker containers
+rmc()
+{
+  echo "REMOVING ALL DOCKER CONTAINERS!!!!"
+  docker rm -fv `docker ps -aq`
+}
+# Remove all Docker images
+rmi()
+{
+  echo "REMOVING ALL DOCKER IMAGES!!!!"
+  docker rmi -f `docker images -q`
+}
+
+# Remove dangling docker images
+drti()
+{
+  docker rmi $(docker images -f dangling=true -q)
+}
+cd() {
+  builtin cd "$*" && echo -ne "\033]0; ${PWD##*/}\007"
+}
+
+# Open Docker Image here
+docker-here() {
+  docker run -it --rm -v `pwd`:/work $1 $2
+}
+
+# Add ssh keys to keyring
+keyadd() {
+  ssh-add
+}
+
+# PEP8 autoformat
+autop8() {
+  autopep8         --ignore=E501         --in-place         --jobs=0         -r .
+}
+
+# generate-keys <TYPE> dsa | ecdsa | ed25519 | rsa | rsa1 <EMAIL>
+generate-keys() {
+  ssh-keygen -t "$1" -C "$2"
+}
+# Temporary Jupyter Notebook
+tempnb() {
+  docker pull jupyter/minimal-notebook
+  docker run --rm -it -p 8888:8888 jupyter/minimal-notebook
+}
+
+# Make a temporary directory and enter it
+tmpd() {
+	local dir
+	if [ $# -eq 0 ]; then
+		dir=$(mktemp -d)
+	else
+		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+	fi
+	cd "$dir" || exit
+}
+
+# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
+targz() {
+	local tmpFile="${1%/}.tar"
+	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${1}" || return 1
+
+	size=$(
+	stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+	stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
+	)
+
+	local cmd=""
+	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+		# the .tar file is smaller than 50 MB and Zopfli is available; use it
+		cmd="zopfli"
+	else
+		if hash pigz 2> /dev/null; then
+			cmd="pigz"
+		else
+			cmd="gzip"
+		fi
+	fi
+
+	echo "Compressing .tar using \`${cmd}\`…"
+	"${cmd}" -v "${tmpFile}" || return 1
+	[ -f "${tmpFile}" ] && rm "${tmpFile}"
+	echo "${tmpFile}.gz created successfully."
+}
+
+# Determine size of a file or total size of a directory
+fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh
+	else
+		local arg=-sh
+	fi
+	# shellcheck disable=SC2199
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@"
+	else
+		du $arg -- .[^.]* *
+	fi
+}

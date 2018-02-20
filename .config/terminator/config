@@ -10,7 +10,7 @@
   title_transmit_bg_color = "#4e9a06"
   title_transmit_fg_color = "#f3f3f3"
 [keybindings]
-  broadcast_all = <Primary><Shift>b
+  broadcast_all = <Primary><Alt><Shift>b
   broadcast_off = <Primary><Shift>z
 [layouts]
   [[default]]
