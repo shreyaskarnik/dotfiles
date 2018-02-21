@@ -2,7 +2,6 @@
 
 # some functions from https://github.com/jessfraz/dotfiles/blob/master/.functions
 
-
 # apt-install package
 apty() {
 
